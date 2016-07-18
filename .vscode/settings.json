@@ -1,0 +1,14 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "standard.options": {
+    "parser": "babel-eslint",
+    "globals": [
+      "$"
+    ],
+    "ignore": [
+      "node_modules/**",
+      "tmp/**"
+    ]
+  },
+  "jsx-quotes": ["error", "prefer-double"]
+}
