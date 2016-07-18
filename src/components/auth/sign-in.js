@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
 import { reduxForm } from 'redux-form'
+
+import { signInUser } from '../../actions'
 
 class SignIn extends Component {
   constructor (props) {
@@ -9,6 +12,7 @@ class SignIn extends Component {
 
   submitAction ({email, password}) {
     console.log(email, password)
+    this.props.signInUser({email, password})
   }
 
   render () {
@@ -16,17 +20,17 @@ class SignIn extends Component {
 
     return (
     <form onSubmit={handleSubmit(this.submitAction)}>
-      <fieldset>
-        <label className="form-group">
+      <fieldset className="form-group">
+        <label>
           Email:
         </label>
-        <input className="form-group" {...email} />
+        <input className="form-control" {...email} />
       </fieldset>
-      <fieldset>
-        <label className="form-group">
+      <fieldset className="form-group">
+        <label>
           Password:
         </label>
-        <input className="form-group" {...password} />
+        <input className="form-control" {...password} />
       </fieldset>
       <button type="submit" className="btn btn-primary">
         Sign in
@@ -36,7 +40,17 @@ class SignIn extends Component {
   }
 }
 
+function mapStateToProps (state) {
+  authMessage = state.auth.message
+}
+
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({
+    signInUser: signInUser
+  }, dispatch)
+}
+
 export default reduxForm({
   form: 'sign-in',
   fields: ['email', 'password']
-}, null, null)(SignIn)
+}, mapStateToProps, mapDispatchToProps)(SignIn)
