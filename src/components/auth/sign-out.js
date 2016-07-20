@@ -1,7 +1,27 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-export class SignOut extends Component {
+import { signOutUser } from '../../actions'
+
+class SignOut extends Component {
+  componentWillMount () {
+    this.props.signOutUser()
+  }
+
   render () {
-    return (<div>SignOut</div>)
+    return (
+    <div>
+      You've been signed out.
+    </div>
+    )
   }
 }
+
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({
+    signOutUser: signOutUser
+  }, dispatch)
+}
+
+export default connect(null, mapDispatchToProps)(SignOut)

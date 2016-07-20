@@ -1,36 +1,56 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
 class AppHeader extends Component {
+  renderLinks () {
+    const path = window.location.pathname
+    const {isAuthenticated} = this.props
+
+    var jsxLinkList = [
+      <li key={0} className={path === '/' ? 'active' : ''}>
+        <Link to="/"> Home
+        </Link>
+      </li>
+    ]
+
+    if (isAuthenticated) {
+      return [
+        ...jsxLinkList,
+        <li key={1} className={path === '/dashboard' ? 'active' : ''}>
+          <Link to="/dashboard"> Dashboard
+          </Link>
+        </li>,
+        <li key={2} className={path === '/signout' ? 'active' : ''}>
+          <Link to="/signout"> Sign out
+          </Link>
+        </li>
+      ]
+    }
+
+    return [
+      ...jsxLinkList,
+      <li key={3} className={path === '/signin' ? 'active' : ''}>
+        <Link to="/signin"> Sign in
+        </Link>
+      </li>,
+      <li key={4} className={path === '/signup' ? 'active' : ''}>
+        <Link to="/signup"> Sign up
+        </Link>
+      </li>
+    ]
+  }
+
   render () {
-    const pathName = window.location.pathname
     return (
     <nav className="navbar navbar-default">
       <div className="navbar-header">
-        <Link className="navbar-brand" to="/"> Authentication App </Link>
+        <Link className="navbar-brand" to="/"> Authentication App
+        </Link>
       </div>
       <div id="navbar" className="navbar-collapse collapse">
         <ul className="nav navbar-nav">
-          <li className={pathName === '/' ? 'active' : ''}>
-            <Link to="/"> Home
-            </Link>
-          </li>
-          <li className={pathName === '/dashboard' ? 'active' : ''}>
-            <Link to="/dashboard"> Dashboard
-            </Link>
-          </li>
-          <li className={pathName === '/signin' ? 'active' : ''}>
-            <Link to="/signin"> Sign in
-            </Link>
-          </li>
-          <li className={pathName === '/signout' ? 'active' : ''}>
-            <Link to="/signout"> Sign out
-            </Link>
-          </li>
-          <li className={pathName === '/signup' ? 'active' : ''}>
-            <Link to="/signup"> Sign up
-            </Link>
-          </li>
+          {this.renderLinks()}
         </ul>
       </div>
     </nav>
@@ -38,7 +58,13 @@ class AppHeader extends Component {
   }
 }
 
-export default AppHeader
+function mapStateToProps (state) {
+  return {
+    isAuthenticated: state.auth.isAuthenticated
+  }
+}
+
+export default connect(mapStateToProps)(AppHeader)
 
 // TODOS:
-// get the current route to apply active class
+// Get the current route to apply active class
