@@ -28,6 +28,3 @@ export default function requireAuthDefinition (ComposedComponent) {
 
   return connect(mapStateToProps)(RequireAuth)
 }
-
-// TODOS:
-// Check if is possible to change context to browserHistory
