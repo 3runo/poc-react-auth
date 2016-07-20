@@ -43,7 +43,7 @@ class AppHeader extends Component {
 
   render () {
     return (
-    <nav className="navbar navbar-default">
+    <nav className="navbar navbar-inverse navbar-fixed-top">
       <div className="navbar-header">
         <Link className="navbar-brand" to="/"> Authentication App
         </Link>

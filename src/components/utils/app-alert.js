@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 export default class AppAlert extends Component {
   render () {
     const {alert} = this.props
-    console.log(alert)
 
     if (!alert) {
       return false
