@@ -1,21 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { browserHistory } from 'react-router'
 
 export default function requireAuthDefinition (ComposedComponent) {
   class RequireAuth extends Component {
-    static contextTypes = {
-      router: React.PropTypes.object
-    }
 
     componentWillMount () {
       if (!this.props.isAuthenticated) {
-        this.context.router.push('/')
+        browserHistory.push('/')
       }
     }
 
     componentWillUpdate (nextProps) {
       if (!nextProps.isAuthenticated) {
-        this.context.router.push('/')
+        browserHistory.push('/')
       }
     }
 
@@ -31,5 +29,5 @@ export default function requireAuthDefinition (ComposedComponent) {
   return connect(mapStateToProps)(RequireAuth)
 }
 
-// TODO:
+// TODOS:
 // Check if is possible to change context to browserHistory
